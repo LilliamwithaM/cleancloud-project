@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [ "master"]
 jobs:
-  master:
+  master_ci_cd:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,9 +15,9 @@ jobs:
           node-version: 16.x
       - name: npm install
         run: npm install
-    #  - name: Test
-     #   run: |
-      #    npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+      #- name: Test
+        #run: |
+          #npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
       - name: make .env 
         uses: SpicyPizza/create-envfile@v1.3
         with:
@@ -63,8 +63,8 @@ jobs:
       - name: update model name in k8 
         run: sed -i 's/{model_name}/${{secrets.MODEL_NAME}}/g' manifests/k8s.yaml
         
-      - name: update nodo in k8 
-        run: sed -i 's/{nodo}/${{secrets.NODO}}/g' manifests/k8s.yaml
+      - name: update replic produccion in k8 
+        run: sed -i 's/{replic_produccion}/${{secrets.replic_produccion}}/g' manifests/k8s.yaml
 
       - name: update _ by - 
         run: sed -i 's/_/-/g' manifests/k8s.yaml
